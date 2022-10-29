@@ -6,6 +6,9 @@ function init() {
   // TODO
   const selectElement = document.getElementById('horn-select');
   const selectAudio = document.getElementsByClassName('hidden');
+  const selectAudioObject = document.querySelector("audio");
+  const jsConfetti = new JSConfetti();
+  console.log(selectAudio);
   selectElement.addEventListener('change', (event) => {
       console.log(event.target.value);
       const name = event.target.value;
@@ -13,15 +16,16 @@ function init() {
       console.log(selectAudio);
       if(name == "air-horn"){
         yum.src = "assets/images/air-horn.svg";
-        selectAudio.src = "assets/audio/air-horn.mp3";
+        selectAudioObject.src = "assets/audio/air-horn.mp3";
       }
       else if(name == "car-horn"){
         yum.src = "assets/images/car-horn.svg";
-        selectAudio.src = "assets/audio/car-horn.mp3";
+        selectAudioObject.src = "assets/audio/car-horn.mp3";
       }
       else if(name == "party-horn"){
         yum.src = "assets/images/party-horn.svg";
-        selectAudio.src = "assets/audio/party-horn.mp3";
+        selectAudioObject.src = "assets/audio/party-horn.mp3";
+        jsConfetti.addConfetti();
       }
       else{
         yum.src = "assets/images/no-image.png";
@@ -30,24 +34,31 @@ function init() {
   const inputElement = document.querySelector("[type='range']");
   inputElement.addEventListener('change', (event) => {
       console.log(inputElement);
-      const value = event.target.value;
+      const value = event.target.value/100.0;
       const volumeImg =  document.querySelector("[alt='Volume level 2']");
       if (value == 0) {
         volumeImg.src = "assets/icons/volume-level-0.svg";
-        selectAudio.volume = value;
+        selectAudioObject.volume = value;
       }
-      else if (value > 0 && value < 33) {
+      else if (value > 0 && value < 0.33) {
         volumeImg.src = "assets/icons/volume-level-1.svg";
-        selectAudio.volume = value;
+        selectAudioObject.volume = value;
       }
-      else if (value >= 33 && value < 67) {
+      else if (value >= 0.33 && value < 0.67) {
         volumeImg.src = "assets/icons/volume-level-2.svg";
-        selectAudio.volume = value;
+        selectAudioObject.volume = value;
       }
       else {
         volumeImg.src = "assets/icons/volume-level-3.svg";
-        selectAudio.volume = value;
+        selectAudioObject.volume = value;
       }
-      console.log(selectAudio.volume);
+      console.log(selectAudioObject.volume);
   });
+  const buttonElement = document.querySelector("button");
+  buttonElement.addEventListener('click',(event) => {
+    selectAudioObject.play();
+    console.log(selectAudioObject);
+
+  });
+  console.log(buttonElement);
 }
